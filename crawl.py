@@ -11,6 +11,14 @@ weekdays = {
     7: "sunday"
 }
 
+jiaolu = {
+    "SHORT": "小交路",
+    "LOCAL": "大交路",
+    "NONSTOP": "快车",
+    "EXPRESS": "快车",
+    "THROUGH": "贯通快车"
+}
+
 def post(URL):
     while True:
         try:
@@ -47,7 +55,7 @@ def crawl_sch(station, id):
                 out.append({
                     "destination": station[dest]["name"],
                     "time": to_time(dat_[1]),
-                    "jiaolu": "小交路" if dat_[2][0] == "SHORT" else "大交路"
+                    "jiaolu": jiaolu[dat_[2][0]]
                 })
 
     out.sort(key=lambda x: x["time"])
@@ -78,11 +86,12 @@ def crawl_all():
     for line in data:
         line_id = line["id"]
         line_code = line["code"]
+        if line_code[0] != 'S': continue
         for station in line["stations"]:
             station_name = station["name"]
             station_id = station["id"]
             print(station_name, line_code)
-            with open(f"{station_name}_{line_code}.json", "w", encoding="utf-8") as f:
+            with open(f"json\\{station_name}_{line_code}.json", "w", encoding="utf-8") as f:
                 f.write(json.dumps(crawl_station_line(station_id, line_id), ensure_ascii=False))
 
 if __name__ == "__main__":
