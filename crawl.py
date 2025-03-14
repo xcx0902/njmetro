@@ -50,7 +50,6 @@ def crawl_sch(station, id):
 
     for schedule in sch:
         for (dest, dat) in schedule.items():
-            # print(dest)
             for dat_ in dat:
                 out.append({
                     "destination": station[dest]["name"],
@@ -64,7 +63,6 @@ def crawl_sch(station, id):
 
 def crawl_station_line(station, line):
     URL = f"https://nmtr.online/metro-realtime/schedules/header/get/line/{line}"
-    # print(json.loads(requests.get(URL).text))
     data = get(URL)["data"]
     out = {}
     for d in data:
@@ -73,20 +71,12 @@ def crawl_station_line(station, line):
             out[weekdays[i]] = p
     return out
 
-# with open("鸡鸣寺.txt", "w", encoding="utf-8") as f:
-#     f.write(json.dumps(crawl_station_line(72, 4), ensure_ascii=False))
-    # print(crawl_station_line(72, 4))
-
-# with open("小市.json", "w", encoding="utf-8") as f:
-#     f.write(json.dumps(crawl_station_line(70, 3), ensure_ascii=False))
-
 def crawl_all():
     URL = "https://nmtr.online/file/railsystem/lines/NJMTR"
     data = get(URL)
     for line in data:
         line_id = line["id"]
         line_code = line["code"]
-        if line_code[0] != 'S': continue
         for station in line["stations"]:
             station_name = station["name"]
             station_id = station["id"]
