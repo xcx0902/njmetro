@@ -12,8 +12,8 @@ weekdays = {
 }
 
 jiaolu = {
-    "SHORT": "小交路",
-    "LOCAL": "大交路",
+    "SHORT": "区间",
+    "LOCAL": "全程",
     "NONSTOP": "快车",
     "EXPRESS": "快车",
     "THROUGH": "贯通快车"
